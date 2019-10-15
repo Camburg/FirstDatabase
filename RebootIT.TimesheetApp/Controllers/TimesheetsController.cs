@@ -25,6 +25,7 @@ namespace RebootIT.TimesheetApp.Controllers
             return View(await timesheetDbContext.ToListAsync());
         }
 
+        // GET: Timesheet for Specific Staff
         public async Task<IActionResult> StaffTimesheet(int? id)
         {
             if (id == null)
@@ -46,6 +47,7 @@ namespace RebootIT.TimesheetApp.Controllers
             return View("Index", timesheets);
         }
 
+        //GET: Timesheets for Specific Client
         public async Task<IActionResult> ClientTimesheet(int? id)
         {
             if (id == null)
@@ -57,6 +59,28 @@ namespace RebootIT.TimesheetApp.Controllers
                                             .Include(t => t.Location)
                                             .Include(t => t.Staff)
                                             .Where(t => t.ClientId == id)
+                                            .ToListAsync();
+
+            if (timesheets == null)
+            {
+                return NotFound();
+            }
+
+            return View("Index", timesheets);
+        }
+
+        //GET: Timesheets for Specific Location
+        public async Task<IActionResult> LocationTimesheet(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var timesheets = await _context.Timesheets.Include(t => t.Client)
+                                            .Include(t => t.Location)
+                                            .Include(t => t.Staff)
+                                            .Where(t => t.LocationId == id)
                                             .ToListAsync();
 
             if (timesheets == null)
