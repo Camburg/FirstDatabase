@@ -8,6 +8,8 @@ namespace RebootIT.TimesheetApp.Data
 {
     public class Staff
     {
+
+        [Display(Name ="Staff")]
         public int Id { get; set; }
         [Required]
         public string Surname { get; set; }

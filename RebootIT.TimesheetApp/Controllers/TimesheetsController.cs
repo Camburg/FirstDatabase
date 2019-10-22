@@ -123,7 +123,10 @@ namespace RebootIT.TimesheetApp.Controllers
         {
             ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "CompanyName", clientId);
             ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name", locationId);
-            ViewData["StaffId"] = new SelectList(_context.Staff, "Id", "Email", staffId);
+
+            var staffList = _context.Staff.Select(ts => new { Id = ts.Id, FullName = ts.Forename + " " + ts.Surname  } );
+
+            ViewData["StaffId"] = new SelectList(staffList, "Id", "FullName", staffId);
             
             return View();
         }
