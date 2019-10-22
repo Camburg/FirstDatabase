@@ -44,6 +44,8 @@ namespace RebootIT.TimesheetApp.Controllers
                 return NotFound();
             }
 
+            ViewData["StaffId"] = id;
+
             return View("Index", timesheets);
         }
 
@@ -66,6 +68,8 @@ namespace RebootIT.TimesheetApp.Controllers
                 return NotFound();
             }
 
+            ViewData["ClientId"] = id;
+
             return View("Index", timesheets);
         }
 
@@ -87,6 +91,8 @@ namespace RebootIT.TimesheetApp.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["LocationId"] = id;
 
             return View("Index", timesheets);
         }
@@ -113,11 +119,12 @@ namespace RebootIT.TimesheetApp.Controllers
         }
 
         // GET: Timesheets/Create
-        public IActionResult Create()
+        public IActionResult Create(int? staffId, int? clientId, int? locationId)
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "CompanyName");
-            ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name");
-            ViewData["StaffId"] = new SelectList(_context.Staff, "Id", "Email");
+            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "CompanyName", clientId);
+            ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Name", locationId);
+            ViewData["StaffId"] = new SelectList(_context.Staff, "Id", "Email", staffId);
+            
             return View();
         }
 
